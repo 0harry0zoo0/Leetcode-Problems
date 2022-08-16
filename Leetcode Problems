@@ -1,0 +1,202 @@
+# Given a sorted array consisting of only integers where every element
+# appears twice except for one element which appears once. Find this
+# single element that appears only once.
+"""
+num_list = [1, 1, 2, 3, 3, 4, 4, 5, 5]
+for i in set(num_list):
+    if num_list.count(i) == 1:
+        print(i)
+"""
+
+# You are given coins of different denominations and a total amount of
+# money. Write a function to compute the number of combinations that
+# make up that amount. You may assume that you have infinite number of
+# each kind of coin.
+"""
+value = 10
+denominations = [5, 2, 1]
+combinations = 0
+for i in range(0, value // denominations[0] + 1):
+    remainder5 = value - i*denominations[0]
+    print(remainder5)
+    if remainder5 == 0:
+        combinations += 1
+    else:
+        for j in range(0, remainder5 // denominations[1] + 1):
+            remainder2 = remainder5 - j * denominations[1]
+            if remainder2 == 0:
+                combinations += 1
+            else:
+                for k in range(0, remainder2 // denominations[2] + 1):
+                    remainder1 = remainder2 - k * denominations[2]
+                    if remainder1 == 0:
+                        combinations += 1
+print(combinations)
+"""
+
+# Find the largest palindrome made from the product of two n-digit
+# numbers.
+# Since the result could be very large, return the largest
+# palindrome mod 1337.
+"""
+n_digits = 2
+factor1 = 10**n_digits - 1
+factor2 = 10**n_digits - 1
+biggest_palindrome = 0
+
+def is_palindrome(num):
+    if str(num) == str(num)[::-1]:
+        return True
+    return False
+
+for i in reversed(range(10**(n_digits - 1), factor1 + 1)):
+    for j in reversed(range(i, factor1 + 1)):
+        if (i * j > biggest_palindrome) and is_palindrome(i * j):
+            biggest_palindrome = i * j
+print(biggest_palindrome % 1337)
+"""
+
+# Find all the elements that appear twice in this array.
+"""
+array = [2, 2, 3, 4, 5, 6, 7, 1, 2, 8, 9, 8, 9, 0, 4]
+element = set(array)
+two_times = []
+for i in element:
+    if array.count(i) == 2:
+        two_times.append(i)
+print(two_times)
+"""
+
+# Given an array of integers, return indices of the two numbers such
+# that they add up to a specific target.
+# You may assume that each input would have exactly one solution, and
+# you may not use the same element twice.
+"""
+array = [3, 4, 1, 7]
+target = 11
+once = True
+for i in range(0, len(array)):
+    other = array.copy()
+    other.remove(array[i])
+    for j in other:
+        if array[i] + j == target and once:
+            print("[" + str(i) + "," , str(array.index(j)) + "]")
+            once = False
+"""
+
+# You are given two non-empty linked lists representing two non-
+# negative integers. The digits are stored in reverse order and each
+# of their nodes contain a single digit. Add the two numbers and
+# return it as a linked list.
+"""
+list1 = [3, 4, 7]
+list2 = [5, 2, 9, 7]
+if len(list1) > len(list2):
+    shortest = len(list2)
+    longest = len(list1)
+else:
+    shortest = len(list1)
+    longest = len(list2)
+sum_list = []
+for i in range(0, shortest):
+    sum_list.append(list1[i] + list2[i])
+for j in range(shortest, longest):
+    try:
+        sum_list.append(list1[j])
+    except:
+        sum_list.append(list2[j])
+for k in range(0, len(sum_list)):
+    if sum_list[i] > 10:
+        sum_list[i + 1] += sum_list[i]//10
+        sum_list[i] = sum_list[i]%10
+print(sum_list)
+"""
+
+# Given a string, find the length of the longest substring without
+# repeating characters.
+"""
+string = "adsdadsdgafgsfgasfgdasfd"
+longest = ""
+substring = ""
+for i in string:
+    if i not in substring:
+        substring += i
+    elif i in substring:
+        if len(substring) > len(longest):
+            longest = substring
+        substring = ""
+print(longest)
+"""
+
+# There are two sorted arrays nums1 and nums2 of size m and n
+# respectively.
+"""
+nums1 = [2, 4, 3, 6]
+nums2 = [5, 3, 2, 6]
+for i in nums2:
+    nums1.append(i)
+nums1.sort()
+if len(nums1)%2 == 0:
+    print((nums1[len(nums1)//2] + nums1[len(nums1)//2 - 1])/2)
+else:
+    print(nums1[len(nums1)//2])
+"""
+
+# Given a string s, find the longest palindromic substring in s. You
+# may assume that the maximum length of s is 1000.
+"""
+s = "ABBBABABABABABABAAAABABBBABBABABBBB"
+longest = ""
+def is_palindrome(num):
+    if str(num) == str(num)[::-1]:
+        return True
+    return False
+for i in range(0, len(s)):
+    for j in range(i, len(s)):
+        if is_palindrome(s[i:(j + 1)]):
+            if len(s[i:(j + 1)]) > len(longest):
+                longest = s[i:(j + 1)]
+print(longest)
+"""
+
+# The string "PAYPALISHIRING" is written in a zigzag pattern on a
+# given number of rows like this: (you may want to display this
+# pattern in a fixed font for better legibility)
+# And then read line by line
+# Write the code that will take a string and make this conversion
+# given a number of rows:
+# string convert(string text, int nRows);
+# convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+"""
+string = "PAYPALISHIRING"
+def convert(text, rows):
+    translated = ""
+    grid = []
+    for i in range(0, rows):
+        grid.append(" " * len(text))
+    row = -1
+    column = 0
+    for letter in text:
+        if column%(rows - 1) == 0 and row < rows - 1:
+            row += 1
+            grid[row] = grid[row][0:column] + letter + grid[row][column + 1:len(grid[row])]
+        else:
+            column += 1
+            row -= 1
+            grid[row] = grid[row][0:column] + letter + grid[row][column + 1:len(grid[row])]
+    for k in grid:
+        translated += k
+    translated = translated.replace(" ", "")
+    return translated
+print(convert(string, 3))
+"""
+
+# Reverse digits of an integer.
+"""
+integer = 453
+integer = str(integer)[::-1]
+if integer.endswith("-"):
+    print("-" + integer[0:len(integer) - 1])
+else:
+    print(integer)
+"""
