@@ -200,3 +200,385 @@ if integer.endswith("-"):
 else:
     print(integer)
 """
+
+# Implement atoi to convert a string to an integer.
+"""
+string = ""
+converted = ""
+for i in string:
+    if len(string) == 0 or i == " ":
+        converted = converted + "0 "
+    else:
+        try:
+            converted += str(ord(i)) + " "
+        except:
+            converted = converted + "0 "
+print(converted)
+"""
+
+# Determine whether an integer is a palindrome. Do this without extra
+# space.
+"""
+number = -23432
+def is_palindrome(num):
+    if str(num) == str(num)[::-1]:
+        return True
+    return False
+print(is_palindrome(number))
+"""
+
+# Implement regular expression matching with support for '.' and '*'.
+# '.' Matches any single character.
+# '*' Matches zero or more of the preceding element.
+# The matching should cover the entire input string (not partial).
+"""
+import re
+
+def isMatch(first, second):
+    result = re.match(second, first)
+    if result.group() == first:
+        return True
+    return False
+print(isMatch("aac", "a*"))
+"""
+
+# Given n non-negative integers a1, a2, ..., an, where each represents
+# a point at coordinate (i, ai). n vertical lines are drawn such that
+# the two endpoints of line i is at (i, ai) and (i, 0). Find two
+# lines, which together with x-axis forms a container, such that the
+# container contains the most water.
+"""
+numbers = [9, 1, 5, 3, 6, 2]
+largest = [0, 0]
+area = 0
+for i in range(0, len(numbers)):
+    for j in range(i + 1, len(numbers)):
+        heights = [numbers[i], numbers[j]]
+        heights.sort()
+        if heights[0] * (j - i) > area:
+            area = heights[0] * (j - i)
+            largest = [i + 1, j + 1]
+print("line 1: (" + str(largest[0]) + ", 0) to (" + str(largest[0]) + ", " + str(numbers[largest[0] - 1]) + ")")
+print("line 2: (" + str(largest[1]) + ", 0) to (" + str(largest[1]) + ", " + str(numbers[largest[1] - 1]) + ")")
+"""
+
+# Given an integer, convert it to a roman numeral.
+"""
+number = 87
+numerals = {1:"I", 5:"V", 10:"X", 50:"L", 100:"C", 500:"D", 1000:"M"}
+conversion = ""
+number_len=len(str(number))
+
+rom_list=[]
+i=1
+while number!=0:
+
+    number,remainder=divmod(number,10)
+    if i==1:
+        if(remainder<=3):
+            rom_list.append("I"*remainder)
+        elif(remainder==4):
+            rom_list.append("IV")
+        elif (remainder == 5):
+            rom_list.append("V")
+        elif (remainder <= 8):
+            rom_list.append("V" + "I"*(remainder-5))
+        elif (remainder == 9):
+            rom_list.append("IX")
+    if i == 2:
+        if (remainder <= 3):
+            rom_list.append("X" * remainder)
+        elif (remainder == 4):
+            rom_list.append("XL")
+        elif (remainder == 5):
+            rom_list.append("L")
+        elif (remainder <= 8):
+            rom_list.append("L" + "X" * (remainder - 5))
+        elif (remainder == 9):
+            rom_list.append("XC")
+    if i == 3:
+        if (remainder <= 3):
+            rom_list.append("C" * remainder)
+        elif (remainder == 4):
+            rom_list.append("CD")
+        elif (remainder == 5):
+            rom_list.append("D")
+        elif (remainder <= 8):
+            rom_list.append("D" + "C" * (remainder - 5))
+        elif (remainder == 9):
+            rom_list.append("CM")
+    if i==4:
+        if (remainder <= 3):
+            rom_list.append("M" * remainder)
+
+    i+=1
+rom_list.reverse()
+print("".join(rom_list))
+"""
+
+# Given a roman numeral, convert it to an integer.
+# Input is guaranteed to be within the range from 1 to 3999.
+"""
+numerals = {"I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000}
+letters = list(numerals.keys())
+roman_numeral_string = "MMCDVXII"
+roman_numeral = [i for i in roman_numeral_string]
+integer = 0
+i = 0
+while i < len(roman_numeral_string):
+    try:
+        if numerals[roman_numeral[i]] < numerals[roman_numeral[i + 1]]:
+            integer += (numerals[roman_numeral[i + 1]] - numerals[roman_numeral[i]])
+            i += 1
+        else:
+            integer += numerals[roman_numeral[i]]
+    except:
+        integer += numerals[roman_numeral[i]]
+    i += 1
+print(integer)
+"""
+
+# Write a function to find the longest common prefix string amongst an
+# array of strings.
+"""
+longest_prefix = ""
+string_list = ["qweity", "qoiu", "qwertyu", "qwreop", "wetryu", "wertio", "qwerto"]
+def find_common_prefix(word1, word2):
+    common = ""
+    list1 = [i for i in word1]
+    list2 = [j for j in word2]
+    for i in range(0,len(word1)):
+        try:
+            if list1[i] == list2[i]:
+                common = common + str(list1[i])
+            else:
+                break
+        except:
+            pass
+    return common
+for i in string_list:
+    for j in string_list:
+        if len(find_common_prefix(i, j)) > len(longest_prefix) and i != j:
+            longest_prefix = find_common_prefix(i, j)
+print(longest_prefix)
+"""
+
+# Given an array S of n integers, are there elements a, b, c in S such
+# that a + b + c = 0? Find all unique triplets in the array which
+# gives the sum of zero.
+"""
+integers = [-2, 3, 4, 1, -5, 2, 7, -3, 6, -1]
+triplets = []
+for i in integers:
+    for j in integers:
+        if i + j != -i and i + j != -j and -1 * (i + j) in integers and i != j:
+            group = [i, j, -1 * (i + j)]
+            group.sort()
+            if group not in triplets:
+                triplets.append(group)
+for i in triplets:
+    print(i)
+"""
+
+# Given an array S of n integers, find three integers in S such that
+# the sum is closest to a given number, target. Return the sum of the
+# three integers. You may assume that each input would have exactly
+# one solution.
+"""
+integers = [3, 4, 6, 1, 7, 21, 12, 14, 9, 8, 11]
+goal = 27
+closest = [integers[0], integers[1], integers[2]]
+for i in integers:
+    for j in integers:
+        for k in integers:
+            if i != j and j != k and i != k:
+                if abs(goal - (i + j + k)) < abs(goal - (closest[0] + closest[1] + closest[2])):
+                    closest[0] = i
+                    closest[1] = j
+                    closest[2] = k
+closest.sort()
+print(closest)
+"""
+
+# Given a digit string, return all possible letter combinations that
+# the number could represent.
+"""
+phone_number_letters = {2:["a", "b", "c"], 3:["d", "e", "f"], 4:["g", "h", "i"], 5:["j", "k", "l"], 6:["m", "n", "o"], 7:["p", "q", "r", "s"], 8:["t", "u", "v"], 9:["w", "x", "y", "z"]}
+digits = "382"
+possibilities = []
+copy_possibilities = [""]
+for i in range(0, len(digits)):
+    possibilities = []
+    for j in copy_possibilities:
+        for k in phone_number_letters[int(digits[i])]:
+            possibilities.append(j + k)
+    copy_possibilities = possibilities.copy()
+print(possibilities)
+"""
+
+# Given an array S of n integers, are there elements a, b, c, and d in
+# S such that a + b + c + d = target? Find all unique quadruplets in
+# the array which gives the sum of target.
+"""
+integers = [-2, 3, 4, 1, -5, 2, 7, -3, 6, -1]
+quadruplets = []
+goal = 6
+for i in integers:
+    for j in integers:
+        for k in integers:
+            for l in integers:
+                if i != j and i != k and i != l and j != k and j != l and k != l and i + j + k + l == goal:
+                    solution = [i, j, k, l]
+                    solution.sort()
+                    if solution not in quadruplets:
+                        quadruplets.append(solution)
+print(quadruplets)
+"""
+
+# Given a list, remove the nth node from the end of list and
+# return its head.
+"""
+list = [4, 5, 2, 3, 6, 1, 5, 3]
+n = 1
+print(list[0:len(list) - n] + list[len(list) - n + 1::])
+"""
+
+# Given a string containing just the characters '(', ')', '{', '}',
+# '[' and ']', determine if the input string is valid.
+# The brackets must close in the correct order, "()" and "()[]{}" are
+# all valid but "(]" and "([)]" are not.
+"""
+left_side = ["(", "[", "{"]
+right_side = [")", "]", "}"]
+need = []
+valid = True
+string = "{[()([])]}"
+for i in range(0, len(string)):
+    character = string[i]
+    if character in left_side:
+        need.append(character)
+    elif character in right_side:
+        if len(need) > 0 and left_side.index(need[len(need) - 1]) == right_side.index(character):
+            need = need[0:len(need) - 1]
+        else:
+            valid = False
+            break
+print(valid)
+"""
+
+# Merge two sorted lists and return it as a new list. The new
+# list should be made by splicing together the first two
+# lists.
+"""
+list1 = [1, 5, 2, 6, 7, 9]
+list2 = [3, 4, 1, 7, 9, 0]
+list1.sort()
+list2.sort()
+for i in list2:
+    list1.append(i)
+print(list1)
+"""
+
+# Given n pairs of parentheses, write a function to generate all
+# combinations of well-formed parentheses.
+"""
+n_parentheses = 3
+combinations = []
+work = []
+pick = []
+for i in range(0, n_parentheses * 2):
+    pick.append(1)
+def convert_1_2_into_parentheses(combo):
+    string = ""
+    for i in combo:
+        if i == 1:
+            string = string + "("
+        else:
+            string = string + ")"
+    return string
+def check_parentheses_validity(parentheses):
+    need = 0
+    for i in range(0, len(parentheses)):
+        character = parentheses[i]
+        if character == "(":
+            need += 1
+        elif character == ")":
+            need -= 1
+            if need < 0:
+                return False
+    if need == 0:
+        return True
+    return False
+combinations.append(convert_1_2_into_parentheses(pick))
+while pick[len(pick) - 1] != 3:
+    pick[0] += 1
+    for i in range(0, len(pick) - 1):
+        if pick[i] == 3:
+            pick[i] = 1
+            pick[i + 1] += 1
+        else:
+            break
+    combinations.append(convert_1_2_into_parentheses(pick))
+for i in combinations:
+    if check_parentheses_validity(i):
+        print(i)
+"""
+
+# Merge k sorted linked lists and return it as one sorted list.
+# Analyze and describe its complexity.
+"""
+lists = [[1, 8, 6, 7, 2], [6, 2, 4, 7], [1, 3, 5]]
+merged = []
+for i in lists:
+    for j in i:
+        merged.append(j)
+merged.sort()
+print(merged)
+"""
+
+# Given a list, swap every two adjacent nodes and return its
+# head.
+"""
+list = [5, 4, 2, 3, 7, 8, 1, 3, 4]
+save = 0
+index = 1
+while index <= len(list) - 1:
+    save = list[index - 1]
+    list[index - 1] = list[index]
+    list[index] = save
+    index += 2
+print(list)
+"""
+
+# Given a list, reverse the nodes of a list k at a time
+# and return its modified list.
+# k is a positive integer and is less than or equal to the length of
+# the list. If the number of nodes is not a multiple of k then
+# left-out nodes in the end should remain as it is.
+"""
+list = [5, 4, 2, 3, 7, 8, 1, 3, 4, 5]
+save = []
+k = 3
+index = k - 1
+while index <= len(list) - 1:
+    save = list[index - (k - 1):index + 1]
+    save.reverse()
+    list[index - 2:index + 1] = save
+    index += k
+print(list)
+"""
+
+# Given a sorted array, remove the duplicates in place such that each
+# element appear only once and return the new length.
+"""
+array = [4, 3, 1, 5, 3, 5, 2, 3, 2]
+array.sort()
+for i in array:
+    x = array.count(i)
+    if array.count(i) > 1:
+        for j in range(0, x):
+            array.remove(i)
+        array.append(i)
+array.sort()
+print(array, len(array))
+"""
